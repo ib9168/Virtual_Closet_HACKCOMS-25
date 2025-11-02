@@ -38,7 +38,7 @@ Deciding what to wear is time-consuming. We wanted to make fashion easier and sm
 
 ## 🔐 Environment Variables
 Create a `.env` file inside **`clothe-ai-backend/`**:
-GOOGLE_API_KEY=your-real-key
+# GOOGLE_API_KEY=your-real-key
 > Tip: Do **not** hardcode keys in code or commit `.env`.
 
 ---
@@ -53,9 +53,9 @@ uvicorn app:app --reload
 # Server: http://127.0.0.1:8000
 # Docs:   http://127.0.0.1:8000/docs
 
-Run the front end:
+# run the front end:
 cd clothe-ai-frontend/main_page
 mvn clean javafx:run
 
-In your java code, point API front end to:
+# in your java code, point API front end to:
 http://127.0.0.1:8000
