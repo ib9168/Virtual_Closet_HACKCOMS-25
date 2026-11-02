@@ -20,7 +20,7 @@ VirtualCloset is your personalized **AI-powered wardrobe assistant**! The assist
 ## ✨ Features
 VirtualCloset offers a variety of functions to help the user manage the closet, including:
 - **Item Management** - Add, edit, and remove items in a **digital closet**.
-- **ChatBot Assistent** - Ask in natural language (e.g., “I have a red floral skirt”) and get **AI outfit ideas**.
+- **ChatBot Assistant** - Ask in natural language (e.g., “I have a red floral skirt”) and get **AI outfit ideas**.
 - **Dress Critique** - Pair selected items and get a **Gemini-powered** rationale.
 - **Real-time Data Modification** - Data persisted locally via **SQLite**.
 
@@ -51,7 +51,7 @@ Deciding what to wear is time-consuming. Many people struggle to decide what to 
 
 ### 🔐 Environment Variables
 Create a `.env` file inside **`clothe-ai-backend/`**:
-- **GOOGLE_API_KEY = your-real-key**
+- **GEMINI_API_KEY = your-real-key**
 > Tip: Do **not** hardcode keys in code or commit `.env`.
 
 ---
@@ -62,13 +62,17 @@ cd clothe-ai-backend
 pip install -r requirements.txt
 
 # start dev server:
-uvicorn app:app --reload
+uvicorn main:app --reload
 # Server: http://127.0.0.1:8000
 # Docs:   http://127.0.0.1:8000/docs
 
-# run the front end:
+```
+
+## 🖥️ Run the Frontend (JavaFX)
+In a second terminal, from the repository root:
+```bash
 cd clothe-ai-frontend/main_page
 mvn clean javafx:run
+```
 
-# in your java code, point API front end to:
-http://127.0.0.1:8000
+The frontend connects to the backend at `http://localhost:8000`.

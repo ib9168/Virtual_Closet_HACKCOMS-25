@@ -24,6 +24,6 @@ def read_root():
     return {"message": "Clothe AI Backend is running!"}
 
 if __name__ == "__main__":
-    # Note: Use `uvicorn app:app --reload` for development from the terminal
+    # Note: Use `uvicorn main:app --reload` for development from the terminal
     # This is for basic local testing/deployment
     uvicorn.run(app, host="0.0.0.0", port=8000)
