@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
 from unittest.mock import patch
-from app import app # Import the main FastAPI application instance
+from main import app # Import the main FastAPI application instance
 
 # Create a test client instance pointing to your FastAPI app
 client = TestClient(app)
