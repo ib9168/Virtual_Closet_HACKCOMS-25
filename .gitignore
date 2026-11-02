@@ -1,1 +1,13 @@
-pom.xml
+# Secrets
+.env
+
+# Python
+.venv/
+venv/
+__pycache__/
+
+# Local database (created on startup by models/garment.py)
+*.db
+
+# Maven build output
+target/
