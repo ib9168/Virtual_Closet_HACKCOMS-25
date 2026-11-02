@@ -38,7 +38,7 @@ def parse_garment_text(text_input: str) -> dict:
     
     # Configure the model to output a JSON object using Pydantic
     response = client.models.generate_content(
-        model='gemini-2.5-flash',
+        model='gemini-flash-lite-latest',
         contents=prompt,
         config=types.GenerateContentConfig(
             response_mime_type="application/json",
@@ -85,7 +85,7 @@ def generate_outfit_idea(garment_text: str) -> str:
     
     # For this task, a text response is sufficient
     response = client.models.generate_content(
-        model='gemini-2.5-flash',
+        model='gemini-flash-lite-latest',
         contents=prompt,
     )
 
@@ -113,7 +113,7 @@ def generate_outfit_from_closet(garment_list: list[dict]) -> str:
     """
     
     response = client.models.generate_content(
-        model='gemini-2.5-flash',
+        model='gemini-flash-lite-latest',
         contents=prompt,
     )
 
