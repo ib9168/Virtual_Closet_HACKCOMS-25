@@ -17,6 +17,12 @@
 
 VirtualCloset is an AI wardrobe assistant with a JavaFX desktop app and a FastAPI backend powered by Google Gemini. Our team of four built it at HackCOMS 2025 to take some of the effort out of deciding what to wear.
 
+<img width="647" height="378" alt="image" src="https://github.com/user-attachments/assets/7c95f782-b969-448b-ba81-9251af646d3f" />
+
+<img width="648" height="306" alt="image" src="https://github.com/user-attachments/assets/369ab497-2e8b-434a-bd91-549ccb704cda" />
+
+
+
 ## Why we built it
 
 Most people own plenty of clothes but still struggle to put outfits together, especially when they're short on time. We wanted to see whether AI could turn a simple description like "I have a red floral skirt" into advice someone could use right away.
