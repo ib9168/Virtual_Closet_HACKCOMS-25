@@ -9,6 +9,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonParser;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -62,9 +67,7 @@ public class PrimaryController {
                 conn.setDoOutput(true);
 
                 // Create request JSON
-                String json = String.format("{\"userId\": \"user\", \"text\": \"%s\"}", 
-                    text.replace("\"", "\\\"") // Escape quotes in input
-                );
+                String json = buildRequestJson(text);
 
                 // Send request
                 try (OutputStream os = conn.getOutputStream()) {
@@ -73,19 +76,14 @@ public class PrimaryController {
 
                 // Read response
                 String response;
-                try (Scanner s = new Scanner(conn.getInputStream()).useDelimiter("\\A")) {
+                try (Scanner s = new Scanner(conn.getInputStream(), StandardCharsets.UTF_8).useDelimiter("\\A")) {
                     response = s.hasNext() ? s.next() : "";
                 }
 
                 // Extract the idea text from response JSON
-                String result = "";
-                if (response.contains("\"idea\":")) {
-                    result = response.substring(response.indexOf("\"idea\":"))
-                                  .replaceAll(".*\"idea\":\\s*\"(.+?)\".*", "$1")
-                                  .replace("\\n", "\n");
-                }
+                String result = extractIdea(response);
 
-                final String displayText = result.isEmpty() ? 
+                final String displayText = result.isEmpty() ?
                     "Error: Unexpected response format" : result;
 
                 Platform.runLater(() -> resultArea.setText(displayText));
@@ -96,5 +94,31 @@ public class PrimaryController {
                     "\n\nMake sure the backend is running at " + BACKEND_URL));
             }
         });
+    }
+
+    static String buildRequestJson(String text) {
+        JsonObject body = new JsonObject();
+        body.addProperty("userId", "user");
+        body.addProperty("text", text);
+        return body.toString();
+    }
+
+    // Returns the idea text from the response JSON, or "" if it is missing or invalid
+    static String extractIdea(String response) {
+        try {
+            JsonElement idea = JsonParser.parseString(response).getAsJsonObject().get("idea");
+            return idea == null || idea.isJsonNull() ? "" : stripMarkdown(idea.getAsString());
+        } catch (JsonParseException | IllegalStateException e) {
+            return "";
+        }
+    }
+
+    // The result area shows plain text, so remove the Markdown symbols Gemini includes
+    static String stripMarkdown(String text) {
+        return text
+            .replaceAll("(?m)^#{1,6}\\s*", "")          // Headings
+            .replace("**", "")                          // Bold
+            .replaceAll("(?m)^(\\s*)\\*\\s+", "$1- ")   // Bullet points
+            .replaceAll("\\*(\\S(?:.*?\\S)?)\\*", "$1"); // Italics
     }
 }
